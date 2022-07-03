@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from "connected-react-router";
 
-import * as actions from "../store/actions";
+import * as actions from "../../store/actions"
 import './Login.scss';
 import { FormattedMessage } from 'react-intl';
 
@@ -16,7 +16,30 @@ class Login extends Component {
     render() {
 
         return (
-            <div>Hello login</div>
+            <div className="login-background">
+                <div className="login-container">
+                    <div className="login-content row">
+                        <div className="col-12 text-login">Login</div>
+                        <div className="col-12 form-group">
+                            <label>Username:</label>
+                            <input type="text" className="form-control"/>
+                        </div>
+                        <div className="col-12 form-group">
+                            <label>Password:</label>
+                            <input type="password" className="form-control"/>
+                        </div>
+                        <div className="col-12">
+                            <button>Login</button>
+                        </div>
+                        <div className="col-12">
+                            <span>Forgot your password?</span>
+                        </div>
+                        <div className="col-12">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         )
     }
 }
