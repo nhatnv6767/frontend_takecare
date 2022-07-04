@@ -5,6 +5,7 @@ import {push} from "connected-react-router";
 import * as actions from "../../store/actions";
 import './Login.scss';
 import {FormattedMessage} from 'react-intl';
+import {handleLoginApi} from "../../services/userService";
 
 
 class Login extends Component {
@@ -14,6 +15,7 @@ class Login extends Component {
             username: "",
             password: "",
             isShowPassword: false,
+            errorMessage: "",
         };
     }
 
@@ -31,9 +33,38 @@ class Login extends Component {
         });
     };
 
-    handleLogin = () => {
-        console.log("username: ", this.state.username);
-        console.log("password: ", this.state.password);
+    handleLogin = async () => {
+        this.setState({
+            errorMessage: ""
+        });
+        let inputUsername = this.state.username;
+        let inputPassword = this.state.password;
+
+        try {
+            let data = await handleLoginApi(inputUsername, inputPassword);
+
+            if (data && data.errCode !== 0) {
+                this.setState({
+                    errMessage: data.message
+                });
+            }
+
+            if (data.data.errCode === 0) {
+                // do when succeed
+                console.log("login success!");
+            }
+        } catch (err) {
+            console.log("check log", err.response);
+            if (err.response) {
+                if (err.response.data) {
+                    this.setState({
+                        errorMessage: err.message
+                    });
+                }
+            }
+
+        }
+
     };
 
     handleShowHidePassword = () => {
@@ -78,6 +109,9 @@ class Login extends Component {
 
                             </div>
 
+                        </div>
+                        <div className="col-12" style={{color: 'red'}}>
+                            {this.state.errorMessage}
                         </div>
                         <div className="col-12">
                             <button
