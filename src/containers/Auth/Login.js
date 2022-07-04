@@ -24,7 +24,6 @@ class Login extends Component {
             username: event.target.value
         });
 
-        console.log(event.target.value);
     };
 
     handleOnChangePassword = (event) => {
@@ -42,6 +41,7 @@ class Login extends Component {
 
         try {
             let data = await handleLoginApi(inputUsername, inputPassword);
+            console.log(data);
 
             if (data && data.errCode !== 0) {
                 this.setState({
@@ -54,11 +54,10 @@ class Login extends Component {
                 console.log("login success!");
             }
         } catch (err) {
-            console.log("check log", err.response);
             if (err.response) {
                 if (err.response.data) {
                     this.setState({
-                        errorMessage: err.message
+                        errMessage: err.response.data.message
                     });
                 }
             }
