@@ -8,16 +8,24 @@ class UserManage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            arrUsers: [],
+        };
     }
 
     async componentDidMount() {
         let response = await getAllUsers("ALL");
-        console.log("User Manage: ", response);
+        if (response && response.errCode === 0) {
+            this.setState({
+                arrUsers: response.users
+            });
+        }
     }
 
 
     render() {
+        console.log("Render: ", this.state);
+        let {arrUsers} = this.state;
         return (
             <div className="users-container">
                 <div className="title text-center">
@@ -32,36 +40,28 @@ class UserManage extends Component {
                             <th>Address</th>
                             <th>Action</th>
                         </tr>
-                        <tr>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                        </tr>
-                        <tr>
-                            <td>Centro comercial Moctezuma</td>
-                            <td>Francisco Chang</td>
-                            <td>Mexico</td>
-                        </tr>
-                        <tr>
-                            <td>Ernst Handel</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                        </tr>
-                        <tr>
-                            <td>Island Trading</td>
-                            <td>Helen Bennett</td>
-                            <td>UK</td>
-                        </tr>
-                        <tr>
-                            <td>Laughing Bacchus Winecellars</td>
-                            <td>Yoshi Tannamuri</td>
-                            <td>Canada</td>
-                        </tr>
-                        <tr>
-                            <td>Magazzini Alimentari Riuniti</td>
-                            <td>Giovanni Rovelli</td>
-                            <td>Italy</td>
-                        </tr>
+                        {arrUsers && arrUsers.map((item, index) => {
+                            return (
+                                <>
+                                    <tr key={index}>
+                                        <td>{item.email}</td>
+                                        <td>{item.firstName}</td>
+                                        <td>{item.lastName}</td>
+                                        <td>{item.address}</td>
+                                        <td>
+                                            <button className="btn-edit">
+                                                <i className="fas fa-pencil-alt"></i>
+                                            </button>
+                                            <button className="btn-delete">
+                                                <i className="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </>
+                            );
+                        })}
+
+
                     </table>
                 </div>
             </div>
