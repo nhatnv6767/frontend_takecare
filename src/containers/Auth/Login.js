@@ -6,7 +6,6 @@ import * as actions from "../../store/actions";
 import './Login.scss';
 import {FormattedMessage} from 'react-intl';
 import {handleLoginApi} from "../../services/userService";
-import {userLoginSuccess} from "../../store/actions";
 
 
 class Login extends Component {
@@ -16,7 +15,7 @@ class Login extends Component {
             username: "",
             password: "",
             isShowPassword: false,
-            errorMessage: "",
+            errMessage: "",
         };
     }
 
@@ -35,7 +34,7 @@ class Login extends Component {
 
     handleLogin = async () => {
         this.setState({
-            errorMessage: ""
+            errMessage: ""
         });
         let inputUsername = this.state.username;
         let inputPassword = this.state.password;
@@ -50,7 +49,7 @@ class Login extends Component {
                 });
             }
 
-            if (data.data.errCode === 0) {
+            if (data && data.errCode === 0) {
                 // do when succeed
                 this.props.userLoginSuccess(data.user);
                 console.log("login success!");
@@ -112,7 +111,7 @@ class Login extends Component {
 
                         </div>
                         <div className="col-12" style={{color: 'red'}}>
-                            {this.state.errorMessage}
+                            {this.state.errMessage}
                         </div>
                         <div className="col-12">
                             <button
@@ -123,7 +122,7 @@ class Login extends Component {
                             </button>
                         </div>
                         <div className="col-12">
-                            <span className="forgor-password">Forgot your password?</span>
+                            <span className="forgot-password">Forgot your password?</span>
                         </div>
                         <div className="col-12 text-center mt-3">
                             <span className="text-other-login">Or Login with:</span>
