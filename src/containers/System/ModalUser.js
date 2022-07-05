@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
 import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {createNewUser} from "../../services/userService";
 
 
 class ModalUser extends Component {
@@ -36,7 +35,27 @@ class ModalUser extends Component {
     };
 
     handleAddNewUser = () => {
-        console.log("Something test add new user", this.state);
+        // let response = await createNewUser();
+        let isValid = this.checkValidateInput();
+        if (isValid) {
+            // call api from Node
+            this.props.createNewUser(this.state);
+        }
+
+    };
+
+    checkValidateInput = () => {
+        let isValid = true;
+        let arrInput = ["email", "password", "firstName", "lastName", "address"];
+        for (let i = 0; i < arrInput.length; i++) {
+            if (!this.state[arrInput[i]]) {
+                isValid = false;
+                alert("Missing parameter: " + arrInput[i]);
+                break;
+            }
+        }
+
+        return isValid;
 
     };
 
