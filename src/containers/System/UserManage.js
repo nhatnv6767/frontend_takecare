@@ -65,6 +65,7 @@ class UserManage extends Component {
                     </div>
                     <div className="users-table mt-3 mx-1">
                         <table id="customers">
+                            <tbody>
                             <tr>
                                 <th>Email</th>
                                 <th>First name</th>
@@ -74,26 +75,23 @@ class UserManage extends Component {
                             </tr>
                             {arrUsers && arrUsers.map((item, index) => {
                                 return (
-                                    <>
-                                        <tr key={index}>
-                                            <td>{item.email}</td>
-                                            <td>{item.firstName}</td>
-                                            <td>{item.lastName}</td>
-                                            <td>{item.address}</td>
-                                            <td>
-                                                <button className="btn-edit">
-                                                    <i className="fas fa-pencil-alt"></i>
-                                                </button>
-                                                <button className="btn-delete">
-                                                    <i className="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </>
+                                    <tr key={index}>
+                                        <td>{item.email}</td>
+                                        <td>{item.firstName}</td>
+                                        <td>{item.lastName}</td>
+                                        <td>{item.address}</td>
+                                        <td>
+                                            <button className="btn-edit">
+                                                <i className="fas fa-pencil-alt"></i>
+                                            </button>
+                                            <button className="btn-delete">
+                                                <i className="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
                                 );
                             })}
-
-
+                            </tbody>
                         </table>
                     </div>
                 </div>
