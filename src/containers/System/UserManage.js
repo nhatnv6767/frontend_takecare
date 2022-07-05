@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import "./UserManage.scss";
 import {getAllUsers, createNewUserService, deleteUserService} from "../../services/userService";
 import ModalUser from "./ModalUser";
+import {emitter} from "../../utils/emitter";
 
 class UserManage extends Component {
 
@@ -52,6 +53,8 @@ class UserManage extends Component {
                 this.setState({
                     isOpenModalUser: false,
                 });
+
+                emitter.emit("EVENT_CLEAR_MODAL_DATA");
             }
             // console.log(response);
         } catch (e) {
