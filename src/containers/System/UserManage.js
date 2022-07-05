@@ -3,6 +3,7 @@ import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
 import "./UserManage.scss";
 import {getAllUsers} from "../../services/userService";
+import ModalUser from "./ModalUser";
 
 class UserManage extends Component {
 
@@ -10,6 +11,7 @@ class UserManage extends Component {
         super(props);
         this.state = {
             arrUsers: [],
+            isOpenModalUser: false,
         };
     }
 
@@ -22,49 +24,81 @@ class UserManage extends Component {
         }
     }
 
+    handleAddNewUser = () => {
+        this.setState({
+            isOpenModalUser: true,
+        });
+    };
+
+    toggleUserModal = () => {
+        this.setState({
+            isOpenModalUser: true,
+        });
+    };
+
 
     render() {
         console.log("Render: ", this.state);
         let {arrUsers} = this.state;
         return (
-            <div className="users-container">
-                <div className="title text-center">
-                    Manage Users
-                </div>
-                <div className="users-table mt-3 mx-1">
-                    <table id="customers">
-                        <tr>
-                            <th>Email</th>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>Address</th>
-                            <th>Action</th>
-                        </tr>
-                        {arrUsers && arrUsers.map((item, index) => {
-                            return (
-                                <>
-                                    <tr key={index}>
-                                        <td>{item.email}</td>
-                                        <td>{item.firstName}</td>
-                                        <td>{item.lastName}</td>
-                                        <td>{item.address}</td>
-                                        <td>
-                                            <button className="btn-edit">
-                                                <i className="fas fa-pencil-alt"></i>
-                                            </button>
-                                            <button className="btn-delete">
-                                                <i className="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </>
-                            );
-                        })}
+            <>
+
+                <div className="users-container">
+
+                    <ModalUser
+                        isOpen={this.state.isOpenModalUser}
+                        toggleFromParent={this.toggleUserModal}
+                        testValue={"abbbbbb"}
+                    />
+
+                    <div className="title text-center">
+                        Manage Users
+                    </div>
+                    <div className="mx-1">
+                        <button
+                            className="btn btn-primary px-3"
+                            onClick={() => this.handleAddNewUser()}
+                        >
+                            <i className="fas fa-plus"></i>
+                            Add new users
+                        </button>
+                    </div>
+                    <div className="users-table mt-3 mx-1">
+                        <table id="customers">
+                            <tr>
+                                <th>Email</th>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Address</th>
+                                <th>Action</th>
+                            </tr>
+                            {arrUsers && arrUsers.map((item, index) => {
+                                return (
+                                    <>
+                                        <tr key={index}>
+                                            <td>{item.email}</td>
+                                            <td>{item.firstName}</td>
+                                            <td>{item.lastName}</td>
+                                            <td>{item.address}</td>
+                                            <td>
+                                                <button className="btn-edit">
+                                                    <i className="fas fa-pencil-alt"></i>
+                                                </button>
+                                                <button className="btn-delete">
+                                                    <i className="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </>
+                                );
+                            })}
 
 
-                    </table>
+                        </table>
+                    </div>
                 </div>
-            </div>
+
+            </>
         );
     }
 
