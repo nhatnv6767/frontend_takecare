@@ -13,4 +13,13 @@ const createNewUserService = (userData) => {
     return axios.post(`/api/create-new-user`, userData);
 };
 
-export {handleLoginApi, getAllUsers, createNewUserService};
+const deleteUserService = (userId) => {
+    return axios.post(`/api/delete-user`, {id: userId});
+};
+
+export {
+    handleLoginApi,
+    getAllUsers,
+    createNewUserService,
+    deleteUserService,
+};
